@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "d49e3600-1b44-4fb6-b89d-38eeb224920d",
+		"name": "Testing_World_API_Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/add_student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d11c58ac-3208-4ae1-aab3-bce54764f21c",
+						"exec": [
+							"tests['Status code is 201'] = responseCode.code == 201;",
+							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"",
+							"tests['Response contains ID'] = responseBody.has('id');",
+							"tests['Response contains first_name'] = responseBody.has('first_name');",
+							"tests['Response contains middle_name'] = responseBody.has('middle_name');",
+							"tests['Response contains last_name'] = responseBody.has('last_name');",
+							"tests['Response contains date_of_birth'] = responseBody.has('date_of_birth');",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var studentID = jsonData.id;",
+							"var studentFirstName = jsonData.first_name;",
+							"var studentMiddleName = jsonData.middle_name;",
+							"var studentLastName = jsonData.last_name;",
+							"var studentDOB = jsonData.date_of_birth;",
+							"",
+							"tests['Correct first name in response'] = studentFirstName === 'Jason';",
+							"tests['Correct midle name in response'] = studentMiddleName === 'API';",
+							"tests['Correct last name in response'] = studentLastName === 'Path';",
+							"tests['Correct date of birth in response'] = studentDOB === '5-5-1955';",
+							"",
+							"// Set environment variables",
+							"postman.setEnvironmentVariable('id', studentID);",
+							"postman.setEnvironmentVariable('expected_first_name', studentFirstName);",
+							"postman.setEnvironmentVariable('expected_midle_name', studentMiddleName);",
+							"postman.setEnvironmentVariable('expected_last_name', studentLastName);",
+							"postman.setEnvironmentVariable('expected_date_of_birth', studentDOB);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"Jason\",\r\n    \"middle_name\": \"API\",\r\n    \"last_name\": \"Path\",\r\n    \"date_of_birth\": \"5-5-1955\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/studentsDetails",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get_student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "67b3f6df-d94f-4cbf-b11f-320b03e10f0c",
+						"exec": [
+							"tests['Status code is 200'] = responseCode.code == 200;",
+							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"",
+							"tests['Response status is true'] = responseBody.has('status');",
+							"tests['Response contains ID'] = responseBody.has('id');",
+							"tests['Response contains first_name'] = responseBody.has('first_name');",
+							"tests['Response contains middle_name'] = responseBody.has('middle_name');",
+							"tests['Response contains last_name'] = responseBody.has('last_name');",
+							"tests['Response contains date_of_birth'] = responseBody.has('date_of_birth');",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var responseStatus = jsonData.status;",
+							"var studentID = jsonData.data.id;",
+							"var studentFirstName = jsonData.data.first_name;",
+							"var studentMiddleName = jsonData.data.middle_name;",
+							"var studentLastName = jsonData.data.last_name;",
+							"var studentDOB = jsonData.data.date_of_birth;",
+							"",
+							"tests['Response status is true'] = responseStatus === 'true';",
+							"tests['Correct expected first name in response'] = studentFirstName === postman.getEnvironmentVariable('expected_first_name');",
+							"tests['Correct expected midle name in response'] = studentMiddleName === postman.getEnvironmentVariable('expected_midle_name');",
+							"tests['Correct expected last name in response'] = studentLastName === postman.getEnvironmentVariable('expected_last_name');",
+							"tests['Correct expected date of birth in response'] = studentDOB === postman.getEnvironmentVariable('expected_datte_of_birth');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/update_student_info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b81a86f8-d4d7-44ef-b129-e908944b9bba",
+						"exec": [
+							"tests['Status code is 200'] = responseCode.code == 200;",
+							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"",
+							"tests['Response status contains status'] = responseBody.has('status');",
+							"tests['Response status contains msg'] = responseBody.has('msg');",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var responseStatus = jsonData.status;",
+							"var responseMessage = jsonData.msg;",
+							"",
+							"tests['Response status is true'] = responseStatus === 'true';",
+							"tests['Response message is \"update data success\"'] = responseMessage === 'update  data success';",
+							"",
+							"// Set environment variables for verification of updated student info",
+							"postman.setEnvironmentVariable('updated_last_name', 'Bourne');",
+							"postman.setEnvironmentVariable('updated_date_of_birth', '5-5-1995');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\":{{id}},\r\n    \"first_name\": \"Jason\",\r\n    \"middle_name\": \"API\",\r\n    \"last_name\": \"Bourne\",\r\n    \"date_of_birth\": \"5-5-1995\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get_updated_student_info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dd141a7e-f044-4044-ab40-a70768d984d6",
+						"exec": [
+							"tests['Status code is 200'] = responseCode.code == 200;",
+							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"",
+							"tests['Response status is true'] = responseBody.has('status');",
+							"tests['Response contains ID'] = responseBody.has('id');",
+							"tests['Response contains first_name'] = responseBody.has('first_name');",
+							"tests['Response contains middle_name'] = responseBody.has('middle_name');",
+							"tests['Response contains last_name'] = responseBody.has('last_name');",
+							"tests['Response contains date_of_birth'] = responseBody.has('date_of_birth');",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var responseStatus = jsonData.status;",
+							"var studentID = jsonData.data.id;",
+							"var studentFirstName = jsonData.data.first_name;",
+							"var studentMiddleName = jsonData.data.middle_name;",
+							"var studentLastName = jsonData.data.last_name;",
+							"var studentDOB = jsonData.data.date_of_birth;",
+							"",
+							"tests['Response status is true'] = responseStatus === 'true';",
+							"tests['Correct expected first name in response'] = studentFirstName === postman.getEnvironmentVariable('expected_first_name');",
+							"tests['Correct expected midle name in response'] = studentMiddleName === postman.getEnvironmentVariable('expected_midle_name');",
+							"tests['Correct updated last name in response'] = studentLastName === postman.getEnvironmentVariable('updated_last_name');",
+							"tests['Correct updated date of birth in response'] = studentDOB === postman.getEnvironmentVariable('updated_date_of_birth');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/delete_student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e2a0a70a-c5dc-4a3a-9304-9b87ab85b71e",
+						"exec": [
+							"tests['Status code is 200'] = responseCode.code == 200;",
+							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"",
+							"tests['Response status contains status'] = responseBody.has('status');",
+							"tests['Response status contains msg'] = responseBody.has('msg');",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var responseStatus = jsonData.status;",
+							"var responseMessage = jsonData.msg;",
+							"",
+							"tests['Response status is true'] = responseStatus === 'true';",
+							"tests['Response message is \"Delete  data success\"'] = responseMessage === 'Delete  data success';"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/verify_deleted_student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3e660c2f-30cd-41f5-9ad7-f419eb065c5a",
+						"exec": [
+							"tests['Status code is 200'] = responseCode.code == 200;",
+							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"",
+							"tests['Response status contains status'] = responseBody.has('status');",
+							"tests['Response status contains msg'] = responseBody.has('msg');",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var responseStatus = jsonData.status;",
+							"var responseMessage = jsonData.msg;",
+							"",
+							"tests['Response status is false'] = responseStatus === 'false';",
+							"tests['Response message is \"No data Found\"'] = responseMessage === 'No data Found';"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
