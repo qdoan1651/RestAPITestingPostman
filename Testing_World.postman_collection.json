@@ -14,7 +14,7 @@
 						"id": "d11c58ac-3208-4ae1-aab3-bce54764f21c",
 						"exec": [
 							"tests['Status code is 201'] = responseCode.code == 201;",
-							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"tests['Response time is less then 2000ms'] = responseTime < 2000;",
 							"",
 							"tests['Response contains ID'] = responseBody.has('id');",
 							"tests['Response contains first_name'] = responseBody.has('first_name');",
@@ -83,7 +83,7 @@
 						"id": "67b3f6df-d94f-4cbf-b11f-320b03e10f0c",
 						"exec": [
 							"tests['Status code is 200'] = responseCode.code == 200;",
-							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"tests['Response time is less then 1000ms'] = responseTime < 1000;",
 							"",
 							"tests['Response status is true'] = responseBody.has('status');",
 							"tests['Response contains ID'] = responseBody.has('id');",
@@ -137,7 +137,7 @@
 						"id": "b81a86f8-d4d7-44ef-b129-e908944b9bba",
 						"exec": [
 							"tests['Status code is 200'] = responseCode.code == 200;",
-							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"tests['Response time is less then 1000ms'] = responseTime < 1000;",
 							"",
 							"tests['Response status contains status'] = responseBody.has('status');",
 							"tests['Response status contains msg'] = responseBody.has('msg');",
@@ -195,7 +195,7 @@
 						"id": "dd141a7e-f044-4044-ab40-a70768d984d6",
 						"exec": [
 							"tests['Status code is 200'] = responseCode.code == 200;",
-							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"tests['Response time is less then 1000ms'] = responseTime < 1000;",
 							"",
 							"tests['Response status is true'] = responseBody.has('status');",
 							"tests['Response contains ID'] = responseBody.has('id');",
@@ -248,7 +248,7 @@
 						"id": "e2a0a70a-c5dc-4a3a-9304-9b87ab85b71e",
 						"exec": [
 							"tests['Status code is 200'] = responseCode.code == 200;",
-							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"tests['Response time is less then 1000ms'] = responseTime < 1000;",
 							"",
 							"tests['Response status contains status'] = responseBody.has('status');",
 							"tests['Response status contains msg'] = responseBody.has('msg');",
@@ -301,7 +301,7 @@
 						"id": "3e660c2f-30cd-41f5-9ad7-f419eb065c5a",
 						"exec": [
 							"tests['Status code is 200'] = responseCode.code == 200;",
-							"tests['Response time is less then 200ms'] = responseTime < 200;",
+							"tests['Response time is less then 1000ms'] = responseTime < 1000;",
 							"",
 							"tests['Response status contains status'] = responseBody.has('status');",
 							"tests['Response status contains msg'] = responseBody.has('msg');",
